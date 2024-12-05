@@ -27,7 +27,7 @@ for order in orders:
     valid = True
     for i in range(len(nums)):
         for j in range(0, i):
-            if nums[j] in map and nums[i] in map[nums[]]:
+            if nums[j] in map and nums[i] in map[nums[j]]:
                 valid = False
     if valid:
         ans += nums[len(nums) // 2]
