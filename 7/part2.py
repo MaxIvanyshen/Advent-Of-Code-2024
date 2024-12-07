@@ -1,4 +1,3 @@
-
 def possible(result, values, after_idx, curr=0):
     if after_idx >= len(values):
         if curr == result:
