@@ -8,12 +8,12 @@ def possible(result, values, after_idx, curr=0):
 
     plus = possible(result, values, after_idx + 1, curr + values[after_idx])
     mult = possible(result, values, after_idx + 1, curr * values[after_idx] if curr != 0 else values[after_idx])
+    concat = possible(result, values, after_idx + 1, int(f"{curr}{values[after_idx]}"))
 
-    return plus or mult
-
+    return plus or mult or concat
 
 ans = 0
-with open("./example_input") as file:
+with open("./input") as file:
     for line in file:
         result, values = line.split(":")
         result = int(result)
