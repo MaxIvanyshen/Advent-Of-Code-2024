@@ -16,47 +16,30 @@ dirs = [
     [0, -1]
 ]
 
-def get_area(char, pos):
-    if pos in seen:
-        return []
-    if not (
-            (pos[0] in range(ROWS))
-            and (pos[1] in range(COLS))
-    ):
-        return []
-    if board[pos[0]][pos[1]] != char:
-        return []
-    q = deque()
-    q.appendleft(pos)
-    area = [pos]
-    while q:
-        r, c = q.pop()
-        seen.add((r, c))
-        for (dr, dc) in dirs:
-            area.extend(get_area(char, (r+dr, c+dc)))
-    return area
-
-areas = []
+ans = 0
 for r in range(ROWS):
     for c in range(COLS):
-        if not (r, c) in seen:
-            areas.append(get_area(board[r][c], (r, c)))
-
-def get_price(area):
-    char = board[area[0][0]][area[0][1]]
-    p = len(area) * 4
-
-    for (r, c) in area:
-        for (dr, dc) in dirs:
-            if r+dr in range(ROWS) and c+dc in range(COLS) and board[r+dr][c+dc] == char:
-                p -= 1
-
-    return len(area) * p
-
-
-ans = 0
-for a in areas:
-    ans += get_price(a)
+        if (r, c) in seen:
+            continue
+        area = 0
+        p = 0
+        q = deque()
+        q.appendleft((r, c))
+        while q:
+            i, j = q.pop()
+            if (i, j) in seen:
+                continue
+            seen.add((i, j))
+            area += 1
+            for (di, dj) in dirs:
+                if i+di in range(ROWS) and j+dj in range(COLS) and board[i+di][j+dj] == board[i][j]:
+                    q.append((i+di, j+dj))
+                else:
+                    p += 1
+        
+        ans += area * p
 
 print(ans)
+
+
 
